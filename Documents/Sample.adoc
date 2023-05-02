@@ -1,0 +1,632 @@
+= AsciiDocサンプル
+KANEDA Akihiro <taoist.aki@gmail.com>
+1.0, 2023-05-02, サンプル版
+// doctypeアトリビュートはデフォルトがarticleなので宣言しなくても良い。
+// :doctype: article
+:lang: ja
+// scriptsアトリビュートは、asciidoctor-pdfの実行時オプションとして-a scripts=cjkを指定しても良い。
+// 付け忘れ防止のためにドキュメント内で指定することを推奨。
+:scripts: cjk
+// テーマフォルダ内のテーマを使用する場合、相対パスを正しく設定すること。
+:pdf-themesdir: ../Themes
+:pdf-theme: jp-theme.yml
+// 以下はデフォルトテーマ。pdf-themesdirアトリビュート設定後に参照できるかは未確認。
+// :pdf-theme: default-theme.yml
+// :pdf-theme: default-sans-with-font-fallbacks-theme.yml
+// フォントディレクトリを指定すると、そのディレクトリのフォントしか使えなくなるので注意。
+// 後述のGEM_FONTS_DIRに配置したほうが良い。
+// ただし、ドキュメントローカルに使用したい場合はFontsディレクトリを利用する。
+:pdf-fontsdir: ../Fonts
+// ドキュメント内で使用する画像ファイルのディレクトリ。MermaidやPlantUMLの画像ファイルもここに生成される。
+:imagesdir: Images
+// Code Highligterはcoderay, highlight.js, rougeなどから選べる。
+// coderayがうまく動かないようならhighlight.jsを使用。
+// :source-highlighter: coderay
+// :source-highlighter: highlight.js
+// rougeが一番機能が豊富で綺麗っぽい。
+// 言語はhttps://rouge-ruby.github.io/docs/file.Languages.htmlを参照。
+:source-highlighter: rouge
+:rouge-style: github
+// バージョンラベルの「Version」を変更する。デフォルトでも特に問題無い。
+// :version-label: バージョン
+// Footerの「Last updated」を変更する。デフォルトでも特に問題無い。
+// :last-update-label: 最終更新
+// TOCの設定
+:toc-title: 目次
+// 目次に表示するレベル指定
+:toclevels: 4
+// 章番号を振る
+:sectnums:
+:sectnumlevels: 4
+// 脚注の設定
+// アイコンを使用する。
+:icons: font
+:example-caption: 例
+// 「Appendix」を変更する。
+// :appendix-caption: 付録
+// 図表などの見出し接頭辞
+:figure-caption: 図
+:table-caption: 表
+:listing-caption: リスト
+:toc:
+
+[abstract]
+== 概要
+
+このファイルは、AsciiDoc形式のドキュメントサンプルです。技術文書を書くための豊富で柔軟な機能が揃っています。AsciidoctorやAsciidoctor-pdfを使って、HTMLやPDFなどの形式に変換できます。
+
+== 環境構築
+
+=== ツールのインストール
+
+以下のツールが必要です。
+
+* Ruby
+* Graphviz
+* PlantUML
+* Asciidoctor
+** asciidoctor
+** asciidoctor-pdf
+** asciidoctor-diagram
+* rouge
+* coderay
+
+=== テーマの適用
+
+このサンプルのPDF用テーマ「jp-theme.yml」を使用したい場合、フォントのインストールを行ってください。
+
+このワークスペースのFontsフォルダにasciidoctor-pdfのデフォルトでは入っていないフォントを格納してください。フォントファイルを持っていない場合は、Install-Font.ps1を実行してフォントをインストールしてください。
+
+.asciidoctor-pdfのデフォルトでは入っていないフォント
+* https://github.com/miiton/Cica[Cica]
+** Cica-Regular.ttf
+** Cica-Bold.ttf
+** Cica-RegularItalic.ttf
+** Cica-BoldItalic.ttf
+* https://github.com/chloerei/asciidoctor-pdf-cjk-kai_gen_gothic/releases[懐源ゴシック]
+** KaiGenGothicJP-Bold-Italic.ttf
+** KaiGenGothicJP-Bold.ttf
+** KaiGenGothicJP-Regular-Italic.ttf
+** KaiGenGothicJP-Regular.ttf
+
+asciidoctor-pdfのフォント格納先ディレクトリに、以下のフォントがインストール済みであることを確認してください。通常は `gem install asciidoctor-pdf` を実行すると自動でインストールされます。
+
+.asciidoctor-pdfにデフォルトで入っているフォント
+* mplus1p-regular-fallback.ttf
+* notoemoji-subset.ttf
+* M+ 1mn
+** mplus1mn-regular-subset.ttf
+** mplus1mn-bold-subset.ttf
+** mplus1mn-italic-subset.ttf
+** mplus1mn-bold_italic-subset.ttf
+
+.asciidoctor-pdfのデフォルトフォント格納先ディレクトリ
+[example]
+C:\Ruby32-x64\lib\ruby\gems\3.2.0\gems\asciidoctor-pdf-2.3.4\data\fonts
+
+== AsciiDocの書き方
+
+Markdownを書いたことがあれば似たような感じで書けます。困ったら以下を参考にしてください。
+
+* 公式。おそらく最新。
+** https://docs.asciidoctor.org/[Asciidoctor Docs]
+** https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/[AsciiDoc Syntax Quick Reference]
+* チートシート。おそらく古い。
+** https://powerman.name/doc/asciidoc[AsciiDoc cheatsheet]
+* 公式のクイックリファレンスの日本語訳。おそらく古い。
+** https://takumon.github.io/asciidoc-syntax-quick-reference-japanese-translation/[Asciidoctor 文法クイックリファレンス(日本語訳)]
+* asciidoc-pdfの使い方やテーマファイル作成の参考になる。
+** https://waku-take-a.github.io/AsciiDoc.html[AsciiDocの記事]
+* Markdownとの違い
+** https://docs.asciidoctor.org/asciidoc/latest/asciidoc-vs-markdown/[Compare AsciiDoc to Markdown]
+
+=== 見出しH3
+
+H1はタイトルです。
+
+==== 見出しH4
+===== 見出しH5
+====== 見出しH6
+
+見出しはタイトルを抜くと5レベルまで、つまりH6まで利用可能です。
+
+=== パラグラフ
+
+通常のパラグラフです。
+改行は反映されません
+// line comments, which are lines that start with //, are skipped
+
+空白行でパラグラフを分割します。
+
+[%hardbreaks]
+このパラグラフは `hardbreaks` オプションを使用しています。
+このように改行がそのまま反映されます。
+
+ インデントされたリテラル表示 (literal) パラグラフはテキストのフォーマットを無効化します。
+ スペースや改行がそのまま反映され、等幅フォントで表示されます。
+ ※ただし、適用しているスタイルテーマによっては本文が等幅フォントだと変わりないように見えます。
+
+[sidebar#id.role]
+スタイル、ID、ロールを与えたパラグラフやブロックは特別なスタイルを適用されます。このパラグラフはサイドバースタイルを適用されているので、表示方法によってはサイドバー用の何らかのスタイルが適用されます。
+
+NOTE: この「注意」のように脚注パラグラフを作成することもできます。読者の注意をひきつけることができます。
+
+TIP: このドキュメントは `asciidoctor` や `asciidoctor-pdf` コマンドで出力されています。
+
+=== 見出し
+
+Markdownでは#ですが、AsciiDocでは=を使用します。見出しレベルは=の数で変更します。
+
+=== 改行
+
+Markdownは改行するとき行末にスペース2つを記述しますが、AsciiDocでは+です。
+
+このように
+通常の改行では1行になります。
+
+このように +
+行末スペースの後に「+」を記述すると2行になります。
+
+このように
++
+改行した行に「+」だけを記述し、上下を文字列で挟んでも2行になります。
+
+=== 改ページ
+
+「<<<」で改ページできます。PDFなどのようにページ設定があるフォーマットで出力する時に使用できます。
+
+<<<
+
+=== 文字装飾
+
+_強調(em)Italic_
+
+*強調(strong)太字*
+
+`monospace font string`
+
+*_太字のItalic_*
+
+`*_all decoration font string_*`
+
+CAUTION: 等幅フォント文字修飾（PDFテーマ上はcodespan）は修飾対象に日本語が混じるとおかしな見た目になります。できるだけ半角英数字のみで使ってください。
+
+文中修飾は記号を2つ連続させる。例えば__Italic__はアンダーラインを2つ。**__太字の斜体__** は強調とItalicの記号を連続させる。
+
+空白を挟んだ #通常のハイライト# と空白無しの文中##ハイライト##指定。
+
+[.underline]#下付き線 Underline# と [.overline]#上付き線 Overline# と [.line-through]#取り消し線 line through# 
+
+[.myrole]#カスタムロールcustom role# をスタイルで定義している場合はスタイルが適用される。
+
+文字の色付けの例。これらはテーマファイルで指定されていてれば、 [red]#赤色の文字# と [green]#緑色の文字# として表示されます。
+
+他にも様々な修飾があります。 https://docs.asciidoctor.org/asciidoc/latest/syntax-quick-reference/#text-formatting[Text formatting]
+
+また、PDF-themeで指定されているロールもあるので確認してみてください。
+
+=== 引用
+
+Markdownでは行頭「> 」を記述しますが、AsciiDocでは[quote]というブロックを使用します。
+
+[quote]
+____
+引用
+改行して引用
+____
+
+長い引用。
+
+[quote, 太宰治, 走れメロス]
+____
+メロスは激怒した。必ず、かの邪智暴虐の王を除かなければならぬと決意した。メロスには政治がわからぬ。メロスは、村の牧人である。笛を吹き、羊と遊んで暮して来た。けれども邪悪に対しては、人一倍に敏感であった。きょう未明メロスは村を出発し、野を越え山越え、十里はなれた此のシラクスの市にやって来た。メロスには父も、母も無い。女房も無い。十六の、内気な妹と二人暮しだ。この妹は、村の或る律気な一牧人を、近々、花婿として迎える事になっていた。結婚式も間近かなのである。メロスは、それゆえ、花嫁の衣裳やら祝宴の御馳走やらを買いに、はるばる市にやって来たのだ。
+____
+
+
+=== 技術文書を書く際に便利な脚注
+
+NOTE: 脚注段落は補足情報を示すものです。
+段落冒頭のラベルによって脚注の種類を使い分けることができます。
+
+TIP: チップスを記述します。
+
+IMPORTANT: 重要事項を記述します。
+
+WARNING: 警告を記述します。
+
+CAUTION: 注意を記述します。
+
+.Optional title
+[example]
+This is an example of an example block.
+
+=== 第一段落スタイル
+
+[.lead]
+この段落は、第一段落のスタイル(文字が大きいスタイル)が適用されます。
+
+パラグラフを分けると元に戻ります。
+
+=== 水平線
+
+---
+
+***
+
+どちらでも。
+
+=== Link
+
+通常はURLと[]でくくられた表示文字列。
+
+https://asciidoctor.org[Asciidoctor]
+
+URLだけでもリンクになります。
+
+https://asciidoctor.org
+
+URLが特殊な形式だったり、ローカルファイルやファイルサーバを参照する場合はlinkマクロを使います。
+
+link:sample.adoc[AsciiDocサンプル]
+
+<<<
+
+=== 画像
+
+.作者のアイコン画像（ブロック画像）
+image::akisensei_icon.jpg[アイコンです。]
+
+ブロック画像はPDFテーマではデフォルトでセンタリングされます。
+
+次の画像はインライン画像です。段落テキストの右側にプルされて配置されます。
+image:akisensei_icon.jpg[アイコンです。, 50, 50, float="right"]
+
+Draw.ioも使えます。drawio.png形式で内部に画像を取り込んだ例です。
+
+image::図.drawio.png[drawioのデモ]
+
+=== 箇条書き（リスト）
+
+Markdownでは-で記述することが一般的ですが、AsciiDocでは*を使用します。
+箇条書きのレベル変更はMarkdownではインデントレベルで変更しますが、AsciiDocでは*の数で変更します。
+
+* 箇条書き1
+* 箇条書き2
+** １段下げ
+*** 2段下げ
+
+=== 番号付きの箇条書き
+
+Markdownでは「数値.」で記述しますが、AsciiDocでは「.」を使用します。
+箇条書きのレベル変更はMarkdownではインデントレベルで変更していますが、AsciiDocでは「.」の数で変更します。
+2レベル目以降も数字でナンバリングしたい場合は[arabic]を挟みます。
+
+. 番号付き1
+. 番号付き2
+.. 1段下げ1
+.. 1段下げ2
+... 2段下げ1
+... 2段下げ2
+. 番号付き1
+[arabic]
+.. 1段下げ1
+[arabic]
+... 2段下げ1
+... 2段下げ2
+.... ←ナンバリングの文字が元の設定に戻ってしまう
+
+=== 説明リスト（Description list）
+
+メロス:: 「走れメロス」の主人公。
+王:: シラクスの王。邪知暴虐。
+セリヌンティウス:: メロスの友人。
+太宰治:: 章塚。道化。人間失格。
+
+=== チェックボックス付きの箇条書き
+
+箇条書き記号の後に[ ]を追加するのみで記述できます。
+
+* [ ] HogeHoge
+** [x] FugaFuga
+** [ ] MogeMoge
+* [x] PiyoPiyo
+
+=== コードブロック
+
+[source,ruby]
+----
+require 'optparse'
+opt = OptionParser.new
+opt.on('-a') {|v| p v }
+opt.on('-b') {|v| p v }
+opt.parse!(ARGV)
+p ARGV
+----
+
+言語名の指定方法は、使用しているsource-highlighterによって異なるのでリファレンスを当たってください。
+
+[source, csharp, linenums]
+----
+public static SampleClass {
+    private static string name; // <1>
+    public static int age; // <2>
+
+    public static int Function (int hoge) {
+        return age;
+    }
+}
+----
+
+<1> はcalloutです。
+
+<2> calloutはM+1 mnフォントを前提としています。
+
+=== テーブル
+
+テーブルは|===で始めて|===で終わるブロック内に書きます。
+行の終わりの|は不要です。
+
+ヘッダはヘッダとデータの行の間に空白を入れるか、ブロックの頭にオプションでヘッダを指定します。
+オプションの指定で幅の自動調整も一緒にしたりするのでブロックの頭にオプション指定したほうが良いでしょう。
+
+標準的なテーブルの書き方は次の通りです。
+
+.テーブルタイトル
+[options="header,autowidth"]
+|===
+|カラム名1 |カラム名2 |カラム名3 
+
+|セル11
+|セル12
+|セル13
+
+|セル21
+|セル22
+|セル23
+|===
+
+ヘッダー行は通常1行にする必要がありますが、ヘッダー行も複数で記述することもできます。詳しくは https://docs.asciidoctor.org/asciidoc/latest/tables/build-a-basic-table/[公式ドキュメント] などを参照のこと。
+
+Markdownと違って1セル1行で記述することで、長文のセルであっても可読性を損なわずに記述できます。セル内の改行も見た目通りに適用されます。
+
+セルの開始を表す|の直前に< ^ > を記述することで、それぞれ左詰め、センタリング、右詰めで表示することができます。上下位置は.の後に< ^ > でそれぞれ上詰め、中央寄せ、下詰めで表示することができます。
+colsオプションでは列幅の相対値を指定できますが、この際文字位置のオプションを付けることもできます。
+
+.とても長い文のセルに文字位置のオプションをつけたもの
+[options="header", cols="^.^1,^.^10"]
+|===
+|項目
+|値
+
+|状況
+|メロスは激怒した。
+
+|詳細
+|必ず、かの邪智暴虐の王を除かなければならぬと決意した。メロスには政治がわからぬ。
+メロスは、村の牧人である。笛を吹き、羊と遊んで暮して来た。けれども邪悪に対しては、人一倍に敏感であった。きょう未明メロスは村を出発し、野を越え山越え、十里はなれた此このシラクスの市にやって来た。メロスには父も、母も無い。女房も無い。
+
+十六の、内気な妹と二人暮しだ。この妹は、村の或る律気な一牧人を、近々、花婿として迎える事になっていた。結婚式も間近かなのである。メロスは、それゆえ、花嫁の衣裳やら祝宴の御馳走やらを買いに、はるばる市にやって来たのだ。
+
+<|左詰め
+>|右詰め
+|===
+
+簡素に書くとこうなります。
+
+|===
+|col1|col2|col3
+|data1|data2|data3
+|===
+
+Excelのセル結合のようなことも出来ます。
+
+.結合表
+[options="header,autowidth"]
+|====
+|col1|col2|col3
+3+|数値のあとに+を書くと横の結合
+.2+|.数値+だと縦結合|2-2|2-3
+|3-2|3-3
+
+2.2+|縦横の結合
+// 連結
+|4-3
+
+// 連結
+// 連結
+|5-3
+|====
+
+列幅の制御もできます。Plain textではないAsciiDoc形式の文章を入れることもできます。colsオプションで対応する列に「a」を追加してください。
+次の表は2対2対5の幅で、3列目をAsciiDoc形式で記述します。
+
+.AsciiDocコンテンツ入り
+[options="header", cols="2,2,5a"]
+|===
+|アプリ名 |種類 |説明
+|Firefox
+|ブラウザ
+|FirefoxはオープンソースのWEBブラウザです。
+
+下記のような特徴があります。:
+
+* 標準仕様準拠
+* 高パフォーマンス
+* 高い可搬性
+
+http://getfirefox.com[Firefoxをダウンロードする]!
+|===
+
+CSVを直接コピペして表を作成することもできます。
+
+.CSVの直接記述
+[format="csv", options="header", autowidth"]
+|===
+アーティスト,トラック,ジャンル
+Baauer,Harlem Shake,Hip Hop
+The Lumineers,Ho Hey,Folk Rock
+|===
+
+WARNING: 次の表は、列幅をautowidthで指定していると、asciidoctor-pdfでPDFへ変換する際にERRORメッセージが出ます（※ちゃんと読めるPDFが出力されます）。
+2列目に「値」や数字1文字のセルしかないため、asciidoctor-pdfが使用しているprawnパッケージが列幅を1文字以下に設定するか判定するかしてしまい、エラーを吐きます。
+解決策はcolsアトリビュートで列幅を明示的に指定することです。このエラーの原因は特定しにくいので、特に気を付けてください。
+
+.MeetingStatusプロパティの値とその意味
+[cols="3,1,3,3"]
+|===
+|名前 |値 |説明 |Outlookアプリ上の扱い
+
+|olNonMeeting
+|0
+|参加者なしで予定が組まれた状態。予定表に休日を設定する際、この状態が生じることがあります。
+|自分で設定した「予定」
+
+|olMeeting
+|1
+|予定が組まれた状態。
+|自分で設定した「会議」
+
+|olMeetingReceived
+|3
+|参加要請が受信された状態。
+|他人が設定した「会議」
+
+|olMeetingCanceled
+|5
+|予定が取り消された状態。
+|キャンセルした「会議」
+
+|olMeetingReceivedAndCanceled
+|7
+|予定されていた会議が取り消されたが、ユーザーの予定表にはまだ表示されている状態。
+|他人が設定してキャンセルされた「会議」
+|===
+
+
+== Asciidoctor-diagram
+
+Asciidoctor-diagramを使用すると、PlantUML、Mermaidなどの図を直接記述できます。Asciidoctor-diagramが画像を勝手にレンダリングして挿入してくれます。
+
+いろいろな図のフォーマットに対応しているのでリファレンスを確認してみてください。
+
+link:https://docs.asciidoctor.org/diagram-extension/latest/[Asciidoctor Diagram]
+
+=== PlantUML
+
+Markdownなどで必要な@startuml、@endumlなどは不要です。
+
+.PlantUMLの例
+[plantuml]
+....
+class teleop_turtle
+class turtlesim
+teleop_turtle -> turtlesim : 速度司令を送る
+....
+
+.PlantUMLの別の例
+[plantuml]
+----
+:user: --> (Use case 1)
+:user: -> (Use case 2)
+----
+
+=== C4 Diagram
+
+PlantUMLにC4 Diagram用のパーツをIncludeすることでC4 Diagramが記述できます。
+
+.C4 Diagramの例
+[plantuml]
+----
+!include <C4/C4_Container>
+
+title AtlassianのSaaS利用
+
+Person(User, "ユーザー", "開発部署の社員です。")
+
+System_Ext(Jira, "Jira", "会社契約のJira。")
+System_Ext(Confluence, "Confluence", "会社契約のConfluence。")
+System_Ext(GitHub, "GitHub", "会社契約のGitHub。")
+
+System(Workflow, "Workflow", "利用審査ワークフロー")
+System(Dns, "DNS", "自社ドメインDNS")
+
+Rel(User, Jira, "利用")
+Rel(User, Confluence, "利用")
+Rel(User, GitHub, "利用")
+
+Rel_Neighbor(User, Workflow, "利用申請", "Excel & Workflow")
+Rel_Neighbor(User, Dns, "TXTレコード登録")
+----
+
+=== graphviz
+
+Graphvizのグラフも直接書けます。
+別ファイルにしてincludeで使うと良いです。
+
+.turtlesimノードグラフ
+[graphviz]
+---------------------------------------------------------------------
+digraph G {
+    rankdir=LR;
+    fontname="sans-serif";
+    penwidth="0.1";
+    edge [comment="Wildcard edge", 
+          fontname="sans-serif", 
+          fontsize=10, 
+          colorscheme="blues3", 
+          color=2, 
+          fontcolor=3];
+    node [fontname="serif", 
+          fontsize=13, 
+          fillcolor="1", 
+          colorscheme="blues4", 
+          color="2", 
+          fontcolor="4", 
+          style="filled"];
+    "turtlesim";
+    "teleop_turtle";
+    "teleop_turtle" -> "turtlesim"  [label="turtle1/cmd_vel"];
+}
+---------------------------------------------------------------------
+
+=== Mermaid
+
+Kroki無しでMermaidをレンダリングするには、
+
+[source,cmd]
+----
+> npm install -g @mermaid-js/mermaid-cli
+----
+
+が必要。
+
+[mermaid]
+....
+sequenceDiagram
+
+ぽち->>たま: 遊べる？
+たま-->>ぽち: いいよ！
+....
+
+=== ditaa
+
+[ditaa]
+....
+                   +-------------+
+                   | Asciidoctor |-------+
+                   |   diagram   |       |
+                   +-------------+       | PNG out
+                       ^                 |
+                       | ditaa in        |
+                       |                 v
+ +--------+   +--------+----+    /---------------\
+ |        | --+ Asciidoctor +--> |               |
+ |  Text  |   +-------------+    |   Beautiful   |
+ |Document|   |   !magic!   |    |    Output     |
+ |     {d}|   |             |    |               |
+ +---+----+   +-------------+    \---------------/
+     :                                   ^
+     |          Lots of work             |
+     +-----------------------------------+
+....
+

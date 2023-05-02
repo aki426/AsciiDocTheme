@@ -1,0 +1,243 @@
+extends: default
+## ----------------------------------------------------------------------------
+## Fonts 
+## ----------------------------------------------------------------------------
+font:
+  catalog:
+    merge: true 
+    # 見栄えの良い源の角ゴシックのTTFバージョン。
+    KaiGen Gothic JP:
+      # normal: KaiGenGothicJP-Regular.ttf
+      normal: KaiGenGothicJP-Regular.ttf
+      bold: KaiGenGothicJP-Bold.ttf
+      italic: KaiGenGothicJP-Regular-Italic.ttf
+      bold_italic: KaiGenGothicJP-Bold-Italic.ttf
+    # やわらかい等幅ゴシック体。
+    Cica: 
+      normal: Cica-Regular.ttf
+      bold: Cica-Bold.ttf
+      italic: Cica-RegularItalic.ttf
+      bold_italic: Cica-BoldItalic.ttf
+    # 次の2つはFallBack設定のためにdefault-with-font-fallbacks-theme.ymlから移植。
+    # M+ 1p supports Latin, Latin-1 Supplement, Latin Extended, Greek, Cyrillic, Vietnamese, Japanese & an assortment of symbols
+    # It also provides arrows for ->, <-, => and <= replacements in case these glyphs are missing from font
+    M+ 1p Fallback: GEM_FONTS_DIR/mplus1p-regular-fallback.ttf
+    Noto Emoji: GEM_FONTS_DIR/notoemoji-subset.ttf
+    # Noto SerifとM+ 1mnはdefault-theme.ymlで定義済み。
+  fallbacks: [M+ 1p Fallback, Noto Emoji]
+
+## ----------------------------------------------------------------------------
+## Additional Settings
+## ----------------------------------------------------------------------------
+role:
+  merge: true
+  # フォント設定
+  proportional_font: KaiGen Gothic JP
+  monospace_font: Cica
+  code_font: Cica
+  default_border_color: #DDDDDD
+  theme_color: #000080
+  block_border_color: #DDDDDD
+  running_border_color: #DDDDDD
+  block_background_color: #FAFAFA
+  # 文字色の追加。[red]#WORD#のように使用する。WORDが赤色に変化する。
+  white:
+    font_color: #ffffff
+  silver:
+    font_color: #c0c0c0
+  gray:
+    font_color: #808080
+  black:
+    font_color: #000000
+  red:
+    font_color: #ff0000
+  maroon:
+    font_color: #800000
+  yellow:
+    font_color: #ffff00
+  olive:
+    font_color: #808000
+  lime:
+    font_color: #00ff00
+  green:
+    font_color: #008000
+  aqua:
+    font_color: #00ffff
+  teal:
+    font_color: #008080
+  blue:
+    font_color: #0000ff
+  navy:
+    font_color: #000080
+  fucsia:
+    font_color: #ff00ff
+  purple:
+    font_color: #800080
+## ----------------------------------------------------------------------------
+## Styles 
+## ----------------------------------------------------------------------------
+page:
+  margin: [10mm, 15mm, 12mm, 15mm]
+  size: A4
+base:
+  text_align: left # 日本語だとleftにしたほうが見栄えが良い。
+  font_family: $role_monospace_font
+  font_color: #333333
+  font_size: 10.5
+  line_height_length: 13.125 # font_sizeが10.5ptのとき、line_height: 1.25になる値。
+  line_heght: $base_line_height_length
+  border_color: $role_default_border_color
+# vertical_rhythm:
+# horizontal_rhythm:
+# link:
+codespan:
+  # Red : #DA291C
+  font_color: #DA291C
+  font_family: $role_code_font
+  background_color: $role_block_background_color
+  border-color: #CCCCCC
+  border-offset: 3
+  border-radius: 3
+  border-width: 0.5
+# button:
+# kbd:
+# mark:
+# menu:
+heading:
+  font_family: $role_proportional_font
+  font_color: $role_theme_color
+  font_style: normal
+  # h1 is used for part titles (book doctype) or the doctitle (article doctype)
+  h1_font_size: floor($base_font_size * 2.6)
+  # h2 is used for chapter titles (book doctype only)
+  h2_font_size: floor($base_font_size * 2.15)
+  h3_font_size: round($base_font_size * 1.8)
+  h4_font_size: $base_font_size_large
+  # h5までは章番号を付ける
+  h5_font_size: $base_font_size
+  # h6は章番号が付かないので太字で差別化する
+  h6_font_size: $base_font_size
+  # h6_font_style: bold
+  # パラグラフと同程度の間隔を設ける
+  line_height: 1.2
+  # タイトルは本文より濃いグレーにする。ほぼ黒字と同じ。
+  h1_font_color: #222222
+  # 章見出しは前の章とのセパレータとしての役割があるので区切り線を入れる。
+  h2-border-color: $base_border_color
+  h2-border-width: [0.5, 0, 0, 0]
+  h2-padding: [$base_line_height_length, 0, 0, 0]
+# title_page: # articleに表紙ページは無い。
+# block:
+caption:
+  align: center # 図、表、リストなどのキャプションをセンタリング
+  font_style: bold
+abstract:
+  font_color: 5C6266
+  font_size: $role_lead_font_size
+  line_height: 1.4
+  font_style: italic
+  first_line_font_style: italic
+  title:
+    text_align: center
+    font_color: $abstract_font_color
+    font_size: $heading_h3_font_size
+    font_style: bold
+admonition:
+  column_rule_color: $role_block_border_color
+  background_color: $role_block_background_color
+  padding: $base_line_height_length
+quote:
+  font_size: $base_font_size * 0.9 # 引用文は文字を気持ち小さく表示したい。
+  border_color: $role_theme_color
+  border_width: 0
+  border_left_width: $horizontal_rhythm / 3
+  padding: [$vertical_rhythm / 2, $horizontal_rhythm, $vertical_rhythm / 2, $horizontal_rhythm + $quote_border_left_width / 2]
+  cite:
+    font_size: $base_font_size_small
+    font_color: $role_subtitle_font_color
+  background_color: $role_block_background_color
+# verse: # 技術文書に詩は要らないのでは……。
+code:
+  font_color: $base_font_color
+  font_family: $codespan_font_family
+  font_size: $base_font_size * 0.9
+  padding: [$code_font_size * 0.5, $code_font_size, $code_font_size * 0.5, $code_font_size] 
+  line_height: 1.2
+  # line_gap is an experimental property to control how a background color is applied to an inline block element
+  line_gap: 3.8
+  background_color: $role_block_background_color
+  border_color: $role_block_border_color
+  border_radius: $base_border_radius
+  border_width: 0
+# conum:
+example:
+  border_color: $role_block_border_color
+  border_radius: $base_border_radius
+  border_width: 0.75
+  background_color: $role_block_background_color
+  padding: [$vertical_rhythm, $horizontal_rhythm, $vertical_rhythm, $horizontal_rhythm]
+image:
+  align: center
+# prose:
+# sidebar: # articleのPDFには不要なのでdefaultのまま定義はいじらない。
+# thematic_break:
+list:
+  indent: $horizontal_rhythm * 1.5
+  # marker_font_color: 404040
+  # NOTE list_item_spacing only applies to list items that do not have complex content
+  item_spacing: $vertical_rhythm * 0.7
+# Ordered Listの数字やUnordered Listのドットが0.5文字分上にズレるように表示される不具合については修正方法が不明。
+# 日本語フォントが含まれる場合ズレるので、ひょっとするとフォントの影響かもしれない。
+olist:
+  marker:
+    font-style: bold
+description_list:
+  term-font-size: $base_font_size * 1.1 # ほんの少し大きく
+  term_font_style: bold
+  term_spacing: $vertical_rhythm / 4
+  description_indent: $horizontal_rhythm * 1.25
+# callout_list:
+table:
+  align: center
+  background_color: $page_background_color
+  border_color: #CCCCCC
+  border_width: $base_border_width
+  grid_width: $base_border_width
+  cell_padding: 3
+  line-heght: $base_line_height_length
+  head:
+    # background_color: #53565A
+    # font_color: #FFFFFF
+    font_style: bold
+    border_bottom_width: $base_border_width * 2.5
+    cell-padding: 3
+  body:
+    stripe_background_color: #DDEFE8
+  foot:
+    background_color: F0F0F0
+  cell:
+    padding: 3
+toc:
+  font_family: $role_proportional_font
+  font_size: $base_font_size_small
+  indent: $horizontal_rhythm
+  line_height: 1.5
+  dot_leader:
+    content: ". "
+    font_color: #CCCCCC
+    levels: 1 2 3
+# footnotes:
+# index:
+header:
+  font_color: #999999
+  height: $base_line_height_length * 2.5
+  padding: [$base_line_height_length / 2, 1, 0, 1]
+  vertical_align: top
+  # 全ページのヘッダーに更新日、バージョン、著者を表示。
+  recto:
+    center:
+      content: '{last-update-label} : {revdate} {version-label} {revnumber} - {author}'
+  verso:
+    center:
+      content: $header_recto_center_content
+# footer:

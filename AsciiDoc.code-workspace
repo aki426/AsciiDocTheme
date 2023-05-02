@@ -1,0 +1,37 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    // AsciiDoc
+    // asciidoctorの使用を強制
+    "asciidoc.use_asciidoctorpdf": true,
+    "asciidoc.use_asciidoctor_js": false, // asciidoctor.js不使用。
+    "asciidoc.use_kroki": false, // kroki不使用。
+    // 基本設定
+    "asciidoc.useWorkspaceRoot": true, // 暫定True。ドキュメントのpdf-themesdirなどに影響するかどうか調査。
+    // Interval in milliseconds between two consecutive updates of the preview.
+    // The value 0 means it will only update the preview on save.
+    "asciidoc.preview.refreshInterval": 0, // PreviewのAuto refleshはパフォーマンスが悪くなるのでOFF設定。
+    // CLI
+    "asciidoc.asciidoctor_command": "asciidoctor -r asciidoctor-diagram",
+    "asciidoc.asciidoctorpdf_command": "asciidoctor-pdf -r asciidoctor-diagram", // -a pdf-theme=default-with-fallback-font は除去。
+    // Style
+    // "asciidoc.preview.fontFamily": "'懐源ゴシック JP', 'Cica', -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif", // 懐源ゴシックをデフォルト使用する。
+    "asciidoc.preview.fontFamily": "Cica, '懐源ゴシック JP', -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'HelveticaNeue-Light', 'Ubuntu', 'Droid Sans', sans-serif", // 懐源ゴシックをデフォルト使用する。
+    "asciidoc.enableErrorDiagnostics": false, // 暫定False。有用ならTrueにする。
+    "asciidoc.preview.useEditorStyle": false, // 暫定False。
+    "asciidoc.preview.linkify": true, // リンクは飛べた方が便利。
+    // Style
+    // スクロール設定をTrueにしているがなぜか動かない。
+    "asciidoc.preview.scrollEditorWithPreview": true,
+    "asciidoc.preview.scrollPreviewWithEditor": true
+  },
+  "extensions": {
+    "recommendations": [
+      "asciidoctor.asciidoctor-vscode"
+    ]
+  },
+}
